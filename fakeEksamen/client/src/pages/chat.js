@@ -22,7 +22,7 @@ function ChatApp({ activeChatroom }) {
     };
     console.log(message)
     try {
-      const response = await axios.post('http://armadillo.pink:25573/get/create', message);
+      const response = await axios.post('http://localhost:5000/get/create', message);
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +33,7 @@ function ChatApp({ activeChatroom }) {
 
     const fetchMessages = async () => {
       try {
-        const response = await axios.get('http://armadillo.pink:25573/get/messages');
+        const response = await axios.get('http://localhost:5000/get/messages');
         const messages = response.data.map((message) => ({
           ...message,
           time: new Date(message.time).toLocaleString(),

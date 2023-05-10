@@ -15,10 +15,6 @@ const Username = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	selectedChats: {
-		type: Array,
-		required: true,
-	},
 	isAdmin: {
 		type: Boolean,
 		default: false,

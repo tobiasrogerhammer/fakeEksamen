@@ -2,19 +2,19 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require("mongoose");
 const cors = require("cors");
-const getcontent = require("./getContent");
-const getUser = require("./getuser");
+const getchats = require("./getChats");
+const createUser = require("./createUser");
 
 const app = express();
-const db = "mongodb+srv://tobias:3EZkUJgct3QLHau@cluster0.v5e8lmx.mongodb.net/test";
-const port = 25573;
+const db = "mongodb+srv://tobias:3EZkUJgct3QLHau@cluster0.v5e8lmx.mongodb.net/fakeEksamen";
+const port = 5000;
 
 mongoose.set("strictQuery", false);
 mongoose.connect(db, {});
-mongoose.connect("mongodb+srv://tobias:3EZkUJgct3QLHau@cluster0.v5e8lmx.mongodb.net/test", {
+mongoose.connect("mongodb+srv://tobias:3EZkUJgct3QLHau@cluster0.v5e8lmx.mongodb.net/fakeEksamen", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: "Chatapp"
+    dbName: "fakeEksamen"
     })
     .then(console.log("Connected to mongoDB"))
     .catch((err) => console.log(err));
@@ -30,8 +30,8 @@ app.use(
 	})
 );
 
-app.use("/get", getcontent)
-app.use("/user", getUser)
+app.use("/get", getchats)
+app.use("/user", createUser)
 
 app.listen(port, () => {
 	console.log(`Backend server listening on port ${port}`);
