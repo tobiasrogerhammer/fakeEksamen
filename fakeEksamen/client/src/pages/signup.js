@@ -54,7 +54,6 @@ function Signup({ onSignup }) {
       }
       if (response.status === 200) {
         sessionStorage.setItem("username", username);
-        sessionStorage.setItem("isAdmin", response.data.isAdmin);
         window.location.href = "/chat";
       }
     } catch (error) {

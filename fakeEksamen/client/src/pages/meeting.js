@@ -32,24 +32,6 @@ function Meeting() {
     }
   };
 
-  const updateIsCompleted = async (id, isCompleted) => {
-    try {
-      await axios.put(`http://localhost:5000/meeting/update/${id}`, {
-        isCompleted,
-      });
-      setMeetings((prevMeetings) => {
-        const updatedMeetings = prevMeetings.map((meeting) =>
-          meeting._id === id ? { ...meeting, isCompleted } : meeting
-        );
-        return updatedMeetings;
-      });
-      alert("Meeting updated successfully!");
-    } catch (err) {
-      console.log(err);
-      alert("Error updating meeting.");
-    }
-  };
-
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
