@@ -1,9 +1,15 @@
+.navbar{
+    position: absolute;
+    background-color: #202225;
+    width: 100%;
+    text-align: center;
+}
+
 .meeting{
     width: 100vh;
-    display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
 }
 .meetingsMain{
     display: flex;
@@ -50,7 +56,8 @@ form {
     padding: 0;
   }
   
-  li {
+  .meetingsList {
+    margin-top: 30%;
     margin-bottom: 16px;
     padding: 16px;
     background-color: white;
@@ -69,3 +76,20 @@ form {
     margin-top: 8px;
   }
   
+  .createMeeting{
+    background-color: #40444b;
+    color: #b9bbbe ;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 350px;
+    margin-left: 70%;
+  }
+
+  .back{
+    position: absolute;
+    font-size: large;
+    color: aliceblue;
+    right: 90%;
+    bottom: 30%;
+  }

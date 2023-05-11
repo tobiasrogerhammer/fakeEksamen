@@ -104,7 +104,9 @@ function ChatApp({ activeChatroom }) {
           </ul>
         </div>
         <div className={styles.meetingsMain}>
-          <h2>Metings</h2>
+          <a className={styles.meetingsHeader} href="/meetings">
+            <h2>Metings</h2>
+          </a>
           <ul>
             {meetings.map((meeting, i) => (
               <li key={i}>

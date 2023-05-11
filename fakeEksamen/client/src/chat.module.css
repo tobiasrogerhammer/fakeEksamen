@@ -19,9 +19,13 @@
 
 .meetingsMain {
   display: flex;
+  margin-top: 18%;
+  position: fixed;
   flex-direction: column;
   height: 70%;
   justify-content: center;
+  overflow: scroll;
+  width: 100%;
 }
 
 .chats {
@@ -159,4 +163,9 @@ button[type="submit"] {
 
 .sendMessage{
   margin-right: 100px;
+}
+.back{
+  position: absolute;
+  font-size: large;
+  color: aliceblue;
 }

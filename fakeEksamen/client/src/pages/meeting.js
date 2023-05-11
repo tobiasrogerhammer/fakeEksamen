@@ -54,11 +54,16 @@ function Meeting() {
 
   return (
     <div className={styles.meeting}>
-      <h2>Metings</h2>
+      <div className={styles.navbar}>
+        <h2>Metings</h2>
+        <a className={styles.back} href="/chat">
+          Back to chatting
+        </a>
+      </div>
       <div className={styles.meetingsMain}>
         <ul>
           {meetings.map((meeting, i) => (
-            <li key={i}>
+            <li className={styles.meetingsList} key={i}>
               <h3>{meeting.title}</h3>
               <p>Start Time: {new Date(meeting.startTime).toLocaleString()}</p>
               <p>End Time: {new Date(meeting.endTime).toLocaleString()}</p>
@@ -72,7 +77,7 @@ function Meeting() {
           ))}
         </ul>
       </div>
-      <form onSubmit={createMeeting}>
+      <form className={styles.createMeeting} onSubmit={createMeeting}>
         <div>
           <label htmlFor="title">Title:</label>
           <input
