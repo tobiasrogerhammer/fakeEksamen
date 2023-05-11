@@ -18,12 +18,31 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.delete("/delete", async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   try {
-    await Meeting.findByIdAndDelete(req.params.id);
-    res.status(200).json("Meeting deleted successfully");
+    const { id } = req.params;
+    await Meeting.deleteOne({ _id: id });
+    res.send(`Meeting ${id} deleted.`);
   } catch (err) {
-    res.status(500).json("feil5");
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+router.put("/update/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { isCompleted } = req.body;
+    const meeting = await Meeting.findByIdAndUpdate(
+      id,
+      { isCompleted },
+      { new: true }
+    );
+
+    res.json(meeting);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error updating meeting" });
   }
 });
 

@@ -1,8 +1,9 @@
 .navbar{
-    position: absolute;
+    position: fixed;
     background-color: #202225;
     width: 100%;
     text-align: center;
+    color: #ffffff;
 }
 
 .meeting{
@@ -57,7 +58,7 @@ form {
   }
   
   .meetingsList {
-    margin-top: 30%;
+    margin-top: 35%;
     margin-bottom: 16px;
     padding: 16px;
     background-color: white;
@@ -84,6 +85,9 @@ form {
     padding: 20px;
     width: 350px;
     margin-left: 70%;
+    position: fixed;
+    right: 20%;
+    bottom: 40%;
   }
 
   .back{
@@ -92,4 +96,15 @@ form {
     color: aliceblue;
     right: 90%;
     bottom: 30%;
+  }
+
+  .delete{
+    color: black;
+    background-color: #ff4136;
+    text-align: center;
+  }
+  .approve{
+    background-color: #00cc00;
+    color: #202225;
+    text-align: center;
   }

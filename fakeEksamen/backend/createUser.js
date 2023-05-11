@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const Username = require("./user");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 router.post("/create", async (req, res) => {
   try {
@@ -26,15 +25,15 @@ router.post("/login", async (req, res) => {
       return res.status(401).json("User not found");
     }
     if (user.isAdmin) {
-      console.log("user is admin");
-    } else {
-      console.log("user is not admin");
+      return res
+        .status(200)
+        .json({ message: "Login successful", isAdmin: true });
     }
     const isMatch = await bcrypt.compare(req.body.password, user.password);
     if (!isMatch) {
       return res.status(401).json("Invalid credentials");
     }
-    res.status(200).json("Login successful");
+    res.status(200).json({ message: "Login successful", isAdmin: false });
   } catch (err) {
     console.log(err);
     res.status(500).json("internal server error");

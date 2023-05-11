@@ -22,10 +22,11 @@
   margin-top: 18%;
   position: fixed;
   flex-direction: column;
-  height: 70%;
+  height: 50%;
   justify-content: center;
   overflow: scroll;
-  width: 100%;
+  width: 20%;
+  border-radius: 10px;
 }
 
 .chats {
@@ -42,10 +43,11 @@
   margin-bottom: 8px;
 }
 
-ul {
+.meetingList {
   list-style: none;
   padding: 0;
   margin: 0;
+  height: 40%;
 }
 
 li button {
@@ -168,4 +170,16 @@ button[type="submit"] {
   position: absolute;
   font-size: large;
   color: aliceblue;
+}
+.meetingsHeader{
+  position: absolute;
+  bottom: 65%;
+  text-decoration: underline;
+  text-decoration-color: white;
+}
+
+.logout{
+  width: 50%;
+  margin-left: 15%;
+  margin-bottom: 10%;
 }

@@ -94,7 +94,6 @@ function ChatApp({ activeChatroom }) {
   return (
     <div className={styles.chatApp}>
       <div className={styles.sidebar}>
-        <h2 className={styles.chatHeader}>Huddly</h2>
         <div className={styles.members}>
           <h2 className={styles.chatHeader}>Members:</h2>
           <ul>
@@ -103,11 +102,11 @@ function ChatApp({ activeChatroom }) {
             ))}
           </ul>
         </div>
+        <a className={styles.meetingsHeader} href="/meetings">
+          <h2>Huddly's Meeting-Page</h2>
+        </a>
         <div className={styles.meetingsMain}>
-          <a className={styles.meetingsHeader} href="/meetings">
-            <h2>Metings</h2>
-          </a>
-          <ul>
+          <ul className={styles.meetingList}>
             {meetings.map((meeting, i) => (
               <li key={i}>
                 <h3>{meeting.title}</h3>
@@ -121,9 +120,12 @@ function ChatApp({ activeChatroom }) {
             ))}
           </ul>
         </div>
+        <a href="/signup">
+          <button className={styles.logout}>Logout</button>
+        </a>
       </div>
       <div className={styles.chatMain}>
-        <h2 className={styles.chatHeader}>{activeChatroom} Chatroom:</h2>
+        <h2 className={styles.chatHeader}>{activeChatroom} Huddly:</h2>
         <div className={styles.chatBody}>
           {chatrooms.map((chatroom) =>
             chatroom.messages.map((message, index) => (

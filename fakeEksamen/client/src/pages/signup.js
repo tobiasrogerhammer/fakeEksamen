@@ -40,24 +40,21 @@ function Signup({ onSignup }) {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/user/login",
-        {
-          username: username,
-          password: password,
-        },
-        { withCredentials: true }
-      );
-      if (response.data.exists) {
-        setError("An error occured. Try again later");
-      }
-      if (response.status === 200) {
-        sessionStorage.setItem("username", username);
-        window.location.href = "/chat";
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await fetch("http://localhost:5000/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      sessionStorage.setItem("username", username);
+      sessionStorage.setItem("isAdmin", data.isAdmin);
+      window.location.href = "/chat";
+      console.log("Login successful");
+    } else {
+      console.log("Login failed");
     }
   };
 

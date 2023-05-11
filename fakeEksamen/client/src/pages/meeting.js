@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../meeting.module.css";
 
@@ -12,6 +12,7 @@ function Meeting() {
     agenda: "",
     isCompleted: false,
   });
+  const isAdmin = sessionStorage.getItem("isAdmin") === "true";
 
   const createMeeting = async (event) => {
     event.preventDefault();
@@ -29,6 +30,42 @@ function Meeting() {
     } catch (err) {
       console.log(err);
       alert("Error creating meeting.");
+    }
+  };
+
+  const updateMeetingStatus = async (meetingId, isChecked) => {
+    if (!isAdmin) {
+      alert("Only admins can update meeting status.");
+      return;
+    }
+    try {
+      await axios.put(`http://localhost:5000/meeting/update/${meetingId}`, {
+        isCompleted: isChecked,
+      });
+      setMeetings((prevMeetings) =>
+        prevMeetings.map((meeting) =>
+          meeting._id === meetingId
+            ? { ...meeting, isCompleted: isChecked }
+            : meeting
+        )
+      );
+      alert("Meeting status updated successfully!");
+    } catch (err) {
+      console.log(err);
+      alert("Error updating meeting status.");
+    }
+  };
+
+  const deleteMeeting = async (meetingId) => {
+    try {
+      await axios.delete(`http://localhost:5000/meeting/delete/${meetingId}`);
+      setMeetings((prevMeetings) =>
+        prevMeetings.filter((meeting) => meeting._id !== meetingId)
+      );
+      alert("Meeting deleted successfully!");
+    } catch (err) {
+      console.log(err);
+      alert("Error deleting meeting.");
     }
   };
 
@@ -55,7 +92,7 @@ function Meeting() {
   return (
     <div className={styles.meeting}>
       <div className={styles.navbar}>
-        <h2>Metings</h2>
+        <h1>Huddly's Metings</h1>
         <a className={styles.back} href="/chat">
           Back to chatting
         </a>
@@ -71,14 +108,34 @@ function Meeting() {
               <p>Agenda: {meeting.agenda}</p>
               <p>
                 Godkjent møte:{" "}
-                {meeting.isCompleted ? <span> ja</span> : <span>Nei</span>}
+                {meeting.isCompleted ? <span> Ja</span> : <span>Nei</span>}
               </p>
+              {isAdmin && (
+                <label className={styles.approve}>
+                  <input
+                    type="checkbox"
+                    checked={meeting.isCompleted}
+                    onChange={(e) =>
+                      updateMeetingStatus(meeting._id, e.target.checked)
+                    }
+                  />
+                  Godkjenn møte
+                </label>
+              )}
+
+              <button
+                className={styles.delete}
+                onClick={() => deleteMeeting(meeting._id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>
       </div>
       <form className={styles.createMeeting} onSubmit={createMeeting}>
         <div>
+          <h2>New Meeting</h2>
           <label htmlFor="title">Title:</label>
           <input
             type="text"
@@ -131,17 +188,6 @@ function Meeting() {
               setFormData({ ...formData, agenda: event.target.value })
             }
           ></textarea>
-        </div>
-        <div>
-          <label htmlFor="isCompleted">Is Completed:</label>
-          <input
-            type="checkbox"
-            id="isCompleted"
-            checked={formData.isCompleted}
-            onChange={(event) =>
-              setFormData({ ...formData, isCompleted: event.target.checked })
-            }
-          />
         </div>
         <button type="submit">Create</button>
       </form>
