@@ -3,7 +3,8 @@ const MongoClient = require('mongodb').MongoClient;
 const mongoose = require("mongoose");
 const cors = require("cors");
 const getchats = require("./getChats");
-const createUser = require("./createUser");
+const users = require("./createUser");
+const admin = require("./admin");
 
 const app = express();
 const db = "mongodb+srv://tobias:3EZkUJgct3QLHau@cluster0.v5e8lmx.mongodb.net/fakeEksamen";
@@ -31,7 +32,9 @@ app.use(
 );
 
 app.use("/get", getchats)
-app.use("/user", createUser)
+app.use("/user", users)
+app.use("/meeting", admin)
+
 
 app.listen(port, () => {
 	console.log(`Backend server listening on port ${port}`);

@@ -14,13 +14,21 @@
   background-color: #202225;
   color: #dcddde;
   padding: 16px;
-  min-width: 250px;
+  min-width: 450px;
+}
+
+.meetingsMain {
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: center;
 }
 
 .chats {
   margin-bottom: 24px;
 }
-.timestamp{
+
+.timestamp {
   font-size: 12px;
 }
 
@@ -51,7 +59,7 @@ li button {
   width: 100%;
 }
 
-.messageList{
+.messageList {
   height: 10%;
   margin: 2%;
 }
@@ -71,7 +79,7 @@ li button.active {
 
 /* Chat main styling */
 .chatMain {
-  margin-left: 16%;
+  margin-left: 25%;
   position: fixed;
   width: 83%;
   display: flex;
@@ -83,16 +91,18 @@ li button.active {
   padding: 16px;
   min-width: 250px;
 }
-.chatstyle{
+
+.chatstyle {
   width: 90%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .chatHeader {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .chatBody {
@@ -117,7 +127,7 @@ li button.active {
   background-color: #40444b;
   border-radius: 4px;
   padding: 8px 16px;
-  width: 97%;
+  width: 95%;
 }
 
 input[type="text"] {
@@ -130,6 +140,7 @@ input[type="text"] {
   margin: 0 8px;
   padding: 8px 0;
   width: 100%;
+  margin-left: 50px;
 }
 
 input[type="text"]:focus {
@@ -144,4 +155,8 @@ button[type="submit"] {
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
+}
+
+.sendMessage{
+  margin-right: 100px;
 }

@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import styles from '../chat.module.css';
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import styles from "../chat.module.css";
 
 function ChatApp({ activeChatroom }) {
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessage, setNewMessage] = useState("");
   const [chatrooms, setChatrooms] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [meetings, setMeetings] = useState([]);
   const username = sessionStorage.getItem("username");
-  const messagesEndRef = useRef()
-  
-  console.log(username)
+  const messagesEndRef = useRef();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (newMessage.trim() === '') {
+    if (newMessage.trim() === "") {
       return;
     }
     const timestamp = new Date().toLocaleString();
@@ -20,20 +21,18 @@ function ChatApp({ activeChatroom }) {
       message: newMessage,
       time: timestamp,
     };
-    console.log(message)
     try {
-      const response = await axios.post('http://localhost:5000/get/create', message);
+      axios.post("http://localhost:5000/get/create", message);
     } catch (error) {
       console.log(error);
     }
-    setNewMessage('');
+    setNewMessage("");
   };
 
   useEffect(() => {
-
     const fetchMessages = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/get/messages');
+        const response = await axios.get("http://localhost:5000/get/messages");
         const messages = response.data.map((message) => ({
           ...message,
           time: new Date(message.time).toLocaleString(),
@@ -44,52 +43,100 @@ function ChatApp({ activeChatroom }) {
         console.log(error);
       }
     };
-    
+
     fetchMessages();
-    const intervalId = setInterval(fetchMessages, 1000)
+    const intervalId = setInterval(fetchMessages, 1000);
     return () => {
       clearInterval(intervalId);
     };
   }, [activeChatroom]);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/user/huddly");
+        const users = response.data.map((username) => ({
+          ...username,
+        }));
+        setMembers(users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    fetchUsers();
+    const intervalId = setInterval(fetchUsers, 10000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/meeting/fetch");
+        const meetings = response.data.map((meeting) => ({
+          ...meeting,
+        }));
+        setMeetings(meetings);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUsers();
+    const intervalId = setInterval(fetchUsers, 10000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <div className={styles.chatApp}>
       <div className={styles.sidebar}>
-        <div className={styles.chats}>
-          <h2 className={styles.chatHeader}>Chatrooms</h2>
+        <h2 className={styles.chatHeader}>Huddly</h2>
+        <div className={styles.members}>
+          <h2 className={styles.chatHeader}>Members:</h2>
           <ul>
-            <li>
-              <button className={`${styles.chatButton} ${activeChatroom === 'Teknisk' ? styles.active : ''}`}>Teknisk</button>
-            </li>
-            <li>
-              <button className={`${styles.chatButton} ${activeChatroom === 'Personal' ? styles.active : ''}`}>Personal</button>
-            </li>
-            <li>
-              <button className={`${styles.chatButton} ${activeChatroom === 'Salg' ? styles.active : ''}`}>Salg</button>
-            </li>
+            {members.map((member, i) => (
+              <li key={i}>{member.username}</li>
+            ))}
           </ul>
         </div>
-        <div className={styles.members}>
-          <h2 className={styles.chatHeader}>Members</h2>
+        <div className={styles.meetingsMain}>
+          <h2>Metings</h2>
           <ul>
-            <li>John</li>
-            <li>Mary</li>
-            <li>Tom</li>
+            {meetings.map((meeting, i) => (
+              <li key={i}>
+                <h3>{meeting.title}</h3>
+                <p>
+                  Start Time: {new Date(meeting.startTime).toLocaleString()}
+                </p>
+                <p>End Time: {new Date(meeting.endTime).toLocaleString()}</p>
+                <p>Location: {meeting.location}</p>
+                <p>Agenda: {meeting.agenda}</p>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
       <div className={styles.chatMain}>
-        <h2 className={styles.chatHeader}>{activeChatroom} Chatroom</h2>
+        <h2 className={styles.chatHeader}>{activeChatroom} Chatroom:</h2>
         <div className={styles.chatBody}>
           {chatrooms.map((chatroom) =>
             chatroom.messages.map((message, index) => (
-              <div id={"msg"+index} className ={styles.messageList} key={index}>
-                <p>
-                <strong>{message.username}:</strong>
-                <p className={styles.chatstyle}>{message.message}<p>{message.time}</p></p>
-                </p>
+              <div
+                id={"msg" + index}
+                className={styles.messageList}
+                key={index}
+              >
+                <div>
+                  <strong>{message.username}:</strong>
+                  <p className={styles.chatstyle}>
+                    {message.message}
+                    <span>{message.time}</span>
+                  </p>
+                </div>
               </div>
             ))
           )}
@@ -104,7 +151,9 @@ function ChatApp({ activeChatroom }) {
               value={newMessage}
               onChange={(event) => setNewMessage(event.target.value)}
             />
-            <button type="submit">Send</button>
+            <button className={styles.sendMessage} type="submit">
+              Send
+            </button>
           </div>
         </form>
       </div>
