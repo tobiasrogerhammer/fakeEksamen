@@ -91,6 +91,11 @@ function ChatApp({ activeChatroom }) {
     };
   }, []);
 
+  function logout() {
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("isAdmin");
+  }
+
   return (
     <div className={styles.chatApp}>
       <div className={styles.sidebar}>
@@ -121,7 +126,9 @@ function ChatApp({ activeChatroom }) {
           </ul>
         </div>
         <a href="/signup">
-          <button className={styles.logout}>Logout</button>
+          <button className={styles.logout} onClick={logout}>
+            Logout
+          </button>
         </a>
       </div>
       <div className={styles.chatMain}>

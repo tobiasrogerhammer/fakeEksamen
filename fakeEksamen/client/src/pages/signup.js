@@ -93,7 +93,7 @@ function Signup({ onSignup }) {
       ) : (
         <form onSubmit={handleLogin}>
           <h2>Login</h2>
-          <label>
+          <label data-testid="usernameLabel">
             Username:
             <input
               type="text"
