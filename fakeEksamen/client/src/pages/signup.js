@@ -88,6 +88,9 @@ function Signup({ onSignup }) {
           </label>
           <br />
           <button type="submit">Sign up</button>
+          <a className={styles.link} href="/multipleUsers">
+            Create more users
+          </a>
           <p onClick={() => setIsRegistering((value) => !value)}>Login here</p>
         </form>
       ) : (

@@ -49,4 +49,26 @@ router.get("/huddly", async (req, res) => {
   }
 });
 
+router.post("/multiple", async (req, res) => {
+  try {
+    const users = req.body.users;
+    const createdUsers = [];
+
+    for (const user of users) {
+      const hashedPassword = await bcrypt.hash(user.password, 12);
+      const newUser = new Username({
+        username: user.username,
+        mailadress: user.mailadress,
+        password: hashedPassword,
+      });
+      const createdUser = await newUser.save();
+      createdUsers.push(createdUser);
+    }
+
+    res.status(200).json(createdUsers);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
