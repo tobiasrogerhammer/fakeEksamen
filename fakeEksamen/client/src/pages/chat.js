@@ -22,7 +22,7 @@ function ChatApp({ activeChatroom }) {
       time: timestamp,
     };
     try {
-      axios.post("http://localhost:5000/get/create", message);
+      axios.post("http://localhost:5001/get/create", message);
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +32,7 @@ function ChatApp({ activeChatroom }) {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/get/messages");
+        const response = await axios.get("http://localhost:5001/get/messages");
         const messages = response.data.map((message) => ({
           ...message,
           time: new Date(message.time).toLocaleString(),
@@ -54,7 +54,7 @@ function ChatApp({ activeChatroom }) {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/user/huddly");
+        const response = await axios.get("http://localhost:5001/user/huddly");
         const users = response.data.map((username) => ({
           ...username,
         }));
@@ -74,7 +74,7 @@ function ChatApp({ activeChatroom }) {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/meeting/fetch");
+        const response = await axios.get("http://localhost:5001/meeting/fetch");
         const meetings = response.data.map((meeting) => ({
           ...meeting,
         }));

@@ -17,7 +17,7 @@ function Meeting() {
   const createMeeting = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:5000/meeting/create", formData);
+      await axios.post("http://localhost:5001/meeting/create", formData);
       setFormData({
         title: "",
         startTime: "",
@@ -39,7 +39,7 @@ function Meeting() {
       return;
     }
     try {
-      await axios.put(`http://localhost:5000/meeting/update/${meetingId}`, {
+      await axios.put(`http://localhost:5001/meeting/update/${meetingId}`, {
         isCompleted: isChecked,
       });
       setMeetings((prevMeetings) =>
@@ -58,7 +58,7 @@ function Meeting() {
 
   const deleteMeeting = async (meetingId) => {
     try {
-      await axios.delete(`http://localhost:5000/meeting/delete/${meetingId}`);
+      await axios.delete(`http://localhost:5001/meeting/delete/${meetingId}`);
       setMeetings((prevMeetings) =>
         prevMeetings.filter((meeting) => meeting._id !== meetingId)
       );
@@ -72,7 +72,7 @@ function Meeting() {
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/meeting/fetch");
+        const response = await axios.get("http://localhost:5001/meeting/fetch");
         const meetings = response.data.map((meeting) => ({
           ...meeting,
         }));

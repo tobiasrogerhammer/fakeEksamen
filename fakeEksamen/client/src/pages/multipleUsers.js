@@ -25,7 +25,7 @@ const Signup = () => {
     setError(null);
 
     try {
-      const response = await axios.post("http://localhost:5000/user/multiple", {
+      const response = await axios.post("http://localhost:5001/user/multiple", {
         users,
       });
       setCreatedUsers(response.data);

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require("mongoose");
@@ -7,17 +8,15 @@ const users = require("./createUser");
 const admin = require("./admin");
 
 const app = express();
-const db = "mongodb+srv://tobias:3EZkUJgct3QLHau@cluster0.v5e8lmx.mongodb.net/fakeEksamen";
-const port = 5000;
+const port = 5001;
 
 mongoose.set("strictQuery", false);
-mongoose.connect(db, {});
-mongoose.connect("mongodb+srv://tobias:3EZkUJgct3QLHau@cluster0.v5e8lmx.mongodb.net/fakeEksamen", {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     dbName: "fakeEksamen"
     })
-    .then(console.log("Connected to mongoDB"))
+    .then(() => console.log("Connected to mongoDB"))
     .catch((err) => console.log(err));
 
 app.use(express.json());

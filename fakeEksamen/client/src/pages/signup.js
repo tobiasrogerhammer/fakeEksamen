@@ -17,7 +17,7 @@ function Signup({ onSignup }) {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/user/create",
+        "http://localhost:5001/user/create",
         {
           username: username,
           mailadress: email,
@@ -40,7 +40,7 @@ function Signup({ onSignup }) {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:5000/user/login", {
+    const response = await fetch("http://localhost:5001/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
