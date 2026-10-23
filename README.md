@@ -1,1 +1,1 @@
-# fakeEksamen
+# Øvelseseksamen i Informasjonsteknologi
